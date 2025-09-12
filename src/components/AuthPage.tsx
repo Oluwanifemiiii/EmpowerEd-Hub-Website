@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { BookOpen, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { supabase, projectId, publicAnonKey } from '../utils/supabase';
+import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { BookOpen, Eye, EyeOff, Loader2 } from "lucide-react";
+import { supabase, projectId, publicAnonKey } from "../utils/supabase";
 
-type Page = 'landing' | 'auth' | 'dashboard' | 'resources';
+type Page = "landing" | "auth" | "dashboard" | "resources";
 
 interface AuthPageProps {
   onLogin: (userData: any) => void;
@@ -17,29 +23,32 @@ interface AuthPageProps {
 export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [signInData, setSignInData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const [signUpData, setSignUpData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    age: '',
-    interests: [] as string[]
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    age: "",
+    interests: [] as string[],
   });
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const { data: { session }, error } = await supabase.auth.signInWithPassword({
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.signInWithPassword({
         email: signInData.email,
-        password: signInData.password
+        password: signInData.password,
       });
 
       if (error) {
@@ -49,31 +58,34 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
 
       if (session?.access_token) {
         // Fetch user profile
-        const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-24097803/profile/${session.user.id}`, {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`,
-            'Content-Type': 'application/json'
+        const response = await fetch(
+          `https://${projectId}.supabase.co/functions/v1/make-server-24097803/profile/${session.user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.access_token}`,
+              "Content-Type": "application/json",
+            },
           }
-        });
+        );
 
         if (response.ok) {
           const { profile } = await response.json();
           onLogin({
             ...profile,
-            accessToken: session.access_token
+            accessToken: session.access_token,
           });
         } else {
           onLogin({
             id: session.user.id,
             email: session.user.email,
-            name: session.user.user_metadata?.name || 'Student',
-            accessToken: session.access_token
+            name: session.user.user_metadata?.name || "Student",
+            accessToken: session.access_token,
           });
         }
       }
     } catch (error) {
-      console.error('Sign in error:', error);
-      setError('Sign in failed. Please try again.');
+      console.error("Sign in error:", error);
+      setError("Sign in failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -82,74 +94,85 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     if (signUpData.password !== signUpData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     if (parseInt(signUpData.age) < 10 || parseInt(signUpData.age) > 15) {
-      setError('Age must be between 10 and 15 years');
+      setError("Age must be between 10 and 15 years");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-24097803/signup`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${publicAnonKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: signUpData.email,
-          password: signUpData.password,
-          name: signUpData.name,
-          age: parseInt(signUpData.age),
-          interests: signUpData.interests
-        })
-      });
+      const response = await fetch(
+        `https://${projectId}.supabase.co/functions/v1/make-server-24097803/signup`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${publicAnonKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: signUpData.email,
+            password: signUpData.password,
+            name: signUpData.name,
+            age: parseInt(signUpData.age),
+            interests: signUpData.interests,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Sign up failed');
+        setError(data.error || "Sign up failed");
         return;
       }
 
       // Now sign in the user
-      const { data: { session }, error: signInError } = await supabase.auth.signInWithPassword({
+      const {
+        data: { session },
+        error: signInError,
+      } = await supabase.auth.signInWithPassword({
         email: signUpData.email,
-        password: signUpData.password
+        password: signUpData.password,
       });
 
       if (signInError) {
-        setError('Account created but sign in failed. Please try signing in manually.');
+        setError(
+          "Account created but sign in failed. Please try signing in manually."
+        );
         return;
       }
 
       if (session?.access_token) {
         // Fetch the profile we just created
-        const profileResponse = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-24097803/profile/${session.user.id}`, {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`,
-            'Content-Type': 'application/json'
+        const profileResponse = await fetch(
+          `https://${projectId}.supabase.co/functions/v1/make-server-24097803/profile/${session.user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${session.access_token}`,
+              "Content-Type": "application/json",
+            },
           }
-        });
+        );
 
         if (profileResponse.ok) {
           const { profile } = await profileResponse.json();
           onLogin({
             ...profile,
-            accessToken: session.access_token
+            accessToken: session.access_token,
           });
         }
       }
     } catch (error) {
-      console.error('Sign up error:', error);
-      setError('Sign up failed. Please try again.');
+      console.error("Sign up error:", error);
+      setError("Sign up failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -160,42 +183,42 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
       <div className="w-full max-w-md space-y-8">
         {/* Logo */}
         <div className="text-center">
-          <button 
-            onClick={() => onNavigate('landing')}
+          <button
+            onClick={() => onNavigate("landing")}
             className="inline-flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
             <div
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  lineHeight: "1", // tighten vertical spacing
+                  marginTop: "1.7rem", // pushes the whole logo down
+                }}
               >
-                <div
+                <span
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    lineHeight: "1", // tighten vertical spacing
-                    marginTop: "1.7rem", // pushes the whole logo down
+                    fontFamily: '"Audiowide", cursive',
+                    fontSize: "2rem",
                   }}
                 >
-                  <span
-                    style={{
-                      fontFamily: '"Audiowide", cursive',
-                      fontSize: "2rem",
-                    }}
-                  >
-                    Empower
-                    <span style={{ marginLeft: "0.25rem" }}>ED</span>
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: '"Kaushan Script", cursive',
-                      fontSize: "2rem",
-                      color: "#facc15",
-                      marginLeft: "4.8rem", // shifts “Hub” so it lines under “ED”
-                    }}
-                  >
-                    Hub
-                  </span>
-                </div>
+                  Empower
+                  <span style={{ marginLeft: "0.25rem" }}>ED</span>
+                </span>
+                <span
+                  style={{
+                    fontFamily: '"Kaushan Script", cursive',
+                    fontSize: "2rem",
+                    color: "#facc15",
+                    marginLeft: "4.8rem", // shifts “Hub” so it lines under “ED”
+                  }}
+                >
+                  Hub
+                </span>
               </div>
+            </div>
           </button>
           <p className="mt-2 text-muted-foreground">
             Welcome back! Sign in to continue your learning journey.
@@ -231,7 +254,9 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                       type="email"
                       placeholder="Enter your email"
                       value={signInData.email}
-                      onChange={(e) => setSignInData({...signInData, email: e.target.value})}
+                      onChange={(e) =>
+                        setSignInData({ ...signInData, email: e.target.value })
+                      }
                       disabled={loading}
                       required
                     />
@@ -244,7 +269,12 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         value={signInData.password}
-                        onChange={(e) => setSignInData({...signInData, password: e.target.value})}
+                        onChange={(e) =>
+                          setSignInData({
+                            ...signInData,
+                            password: e.target.value,
+                          })
+                        }
                         disabled={loading}
                         required
                       />
@@ -271,7 +301,7 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                         Signing In...
                       </>
                     ) : (
-                      'Sign In'
+                      "Sign In"
                     )}
                   </Button>
                 </form>
@@ -307,7 +337,9 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                       type="text"
                       placeholder="Enter your full name"
                       value={signUpData.name}
-                      onChange={(e) => setSignUpData({...signUpData, name: e.target.value})}
+                      onChange={(e) =>
+                        setSignUpData({ ...signUpData, name: e.target.value })
+                      }
                       disabled={loading}
                       required
                     />
@@ -319,7 +351,9 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                       type="email"
                       placeholder="Enter your email"
                       value={signUpData.email}
-                      onChange={(e) => setSignUpData({...signUpData, email: e.target.value})}
+                      onChange={(e) =>
+                        setSignUpData({ ...signUpData, email: e.target.value })
+                      }
                       disabled={loading}
                       required
                     />
@@ -333,7 +367,9 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                       min="10"
                       max="15"
                       value={signUpData.age}
-                      onChange={(e) => setSignUpData({...signUpData, age: e.target.value})}
+                      onChange={(e) =>
+                        setSignUpData({ ...signUpData, age: e.target.value })
+                      }
                       disabled={loading}
                       required
                     />
@@ -345,19 +381,31 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                       type="password"
                       placeholder="Create a password"
                       value={signUpData.password}
-                      onChange={(e) => setSignUpData({...signUpData, password: e.target.value})}
+                      onChange={(e) =>
+                        setSignUpData({
+                          ...signUpData,
+                          password: e.target.value,
+                        })
+                      }
                       disabled={loading}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-confirm-password">Confirm Password</Label>
+                    <Label htmlFor="signup-confirm-password">
+                      Confirm Password
+                    </Label>
                     <Input
                       id="signup-confirm-password"
                       type="password"
                       placeholder="Confirm your password"
                       value={signUpData.confirmPassword}
-                      onChange={(e) => setSignUpData({...signUpData, confirmPassword: e.target.value})}
+                      onChange={(e) =>
+                        setSignUpData({
+                          ...signUpData,
+                          confirmPassword: e.target.value,
+                        })
+                      }
                       disabled={loading}
                       required
                     />
@@ -369,13 +417,14 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
                         Creating Account...
                       </>
                     ) : (
-                      'Create Account'
+                      "Create Account"
                     )}
                   </Button>
                 </form>
                 <div className="mt-4 text-center text-sm text-muted-foreground">
-                  By creating an account, you agree to our terms of service and privacy policy.
-                  We're committed to keeping your information safe.
+                  By creating an account, you agree to our terms of service and
+                  privacy policy. We're committed to keeping your information
+                  safe.
                 </div>
               </CardContent>
             </Card>
@@ -383,8 +432,8 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
         </Tabs>
 
         <div className="text-center">
-          <button 
-            onClick={() => onNavigate('landing')}
+          <button
+            onClick={() => onNavigate("landing")}
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             ← Back to homepage
