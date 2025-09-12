@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { BookOpen, User, LogOut } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 
 type Page = 'landing' | 'auth' | 'dashboard' | 'resources' | 'contact';
 
@@ -22,46 +22,86 @@ export default function Navbar({ isAuthenticated, user, onLogout, onNavigate, cu
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <button 
-            onClick={() => onNavigate(isAuthenticated ? "dashboard" : "landing")} 
+          <button
+            onClick={() =>
+              onNavigate(isAuthenticated ? "dashboard" : "landing")
+            }
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <BookOpen className="h-8 w-8 text-primary" />
-            <span className="text-xl font-semibold text-primary">EmpowerEd Hub</span>
+            <div className="h-9 w-9 flex items-center justify-center overflow-hidden">
+              <img
+                src="src/styles/newsmplogo.svg"
+                alt="EmpowerEd Hub Logo"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    lineHeight: "1", // tighten vertical spacing
+                    marginTop: "1.7rem", // pushes the whole logo down
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: '"Audiowide", cursive',
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Empower
+                    <span style={{ marginLeft: "0.25rem" }}>ED</span>
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: '"Kaushan Script", cursive',
+                      fontSize: "2rem",
+                      color: "#facc15",
+                      marginLeft: "4.8rem", // shifts “Hub” so it lines under “ED”
+                    }}
+                  >
+                    Hub
+                  </span>
+                </div>
+              </div>
           </button>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {isAuthenticated && (
               <>
-                <button 
-                  onClick={() => onNavigate('dashboard')}
+                <button
+                  onClick={() => onNavigate("dashboard")}
                   className={`text-sm transition-colors hover:text-primary ${
-                    currentPage === 'dashboard' 
-                      ? 'text-primary font-medium' 
-                      : 'text-muted-foreground'
+                    currentPage === "dashboard"
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground"
                   }`}
                 >
                   Dashboard
                 </button>
-                <button 
-                  onClick={() => onNavigate('resources')}
+                <button
+                  onClick={() => onNavigate("resources")}
                   className={`text-sm transition-colors hover:text-primary ${
-                    currentPage === 'resources' 
-                      ? 'text-primary font-medium' 
-                      : 'text-muted-foreground'
+                    currentPage === "resources"
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground"
                   }`}
                 >
                   Resources
                 </button>
               </>
             )}
-            <button 
-              onClick={() => onNavigate('contact')}
+            <button
+              onClick={() => onNavigate("contact")}
               className={`text-sm transition-colors hover:text-primary ${
-                currentPage === 'contact' 
-                  ? 'text-primary font-medium' 
-                  : 'text-muted-foreground'
+                currentPage === "contact"
+                  ? "text-primary font-medium"
+                  : "text-muted-foreground"
               }`}
             >
               Contact
@@ -75,12 +115,12 @@ export default function Navbar({ isAuthenticated, user, onLogout, onNavigate, cu
                 <div className="flex items-center space-x-2">
                   <User className="h-5 w-5 text-muted-foreground" />
                   <span className="text-sm text-foreground">
-                    {user?.name || 'Student'}
+                    {user?.name || "Student"}
                   </span>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={onLogout}
                   className="text-muted-foreground hover:text-foreground"
                 >
@@ -89,7 +129,7 @@ export default function Navbar({ isAuthenticated, user, onLogout, onNavigate, cu
                 </Button>
               </div>
             ) : (
-              <Button size="sm" onClick={() => onNavigate('auth')}>
+              <Button size="sm" onClick={() => onNavigate("auth")}>
                 Sign In
               </Button>
             )}

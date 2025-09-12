@@ -1,4 +1,6 @@
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Kaushan+Script&display=swap');
+@tailwind utilities;
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
     *, :before, :after, ::backdrop {
@@ -170,11 +172,19 @@
     -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
   }
+@font-face {
+  font-family: 'Audiowide';
+  src: url('/src/assets/fonts/Audiowide-Regular.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-size: inherit;
-    font-weight: inherit;
-  }
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url('/src/assets/fonts/KaushanScript-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
   a {
     color: inherit;
@@ -5060,3 +5070,4 @@ html {
     opacity: 0;
   }
 }
+

@@ -164,8 +164,38 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
             onClick={() => onNavigate('landing')}
             className="inline-flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <BookOpen className="h-10 w-10 text-primary" />
-            <span className="text-2xl font-bold text-primary">EmpowerEd Hub</span>
+            <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    lineHeight: "1", // tighten vertical spacing
+                    marginTop: "1.7rem", // pushes the whole logo down
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: '"Audiowide", cursive',
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Empower
+                    <span style={{ marginLeft: "0.25rem" }}>ED</span>
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: '"Kaushan Script", cursive',
+                      fontSize: "2rem",
+                      color: "#facc15",
+                      marginLeft: "4.8rem", // shifts “Hub” so it lines under “ED”
+                    }}
+                  >
+                    Hub
+                  </span>
+                </div>
+              </div>
           </button>
           <p className="mt-2 text-muted-foreground">
             Welcome back! Sign in to continue your learning journey.

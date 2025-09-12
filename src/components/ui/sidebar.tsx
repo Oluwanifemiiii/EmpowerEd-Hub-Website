@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot@1.1.2";
-import { VariantProps, cva } from "class-variance-authority@0.7.1";
-import { PanelLeftIcon } from "lucide-react@0.487.0";
+import { Slot } from "@radix-ui/react-slot";
+import { VariantProps, cva } from "class-variance-authority";
+import { PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "./use-mobile";
 import { cn } from "./utils";
@@ -399,9 +399,9 @@ function SidebarGroupLabel({
   ...props
 }: React.ComponentProps<"div"> & { asChild?: boolean }) {
   const Comp = asChild ? Slot : "div";
-
+  const Component = Comp as React.ElementType;
   return (
-    <Comp
+    <Component
       data-slot="sidebar-group-label"
       data-sidebar="group-label"
       className={cn(
@@ -421,8 +421,9 @@ function SidebarGroupAction({
 }: React.ComponentProps<"button"> & { asChild?: boolean }) {
   const Comp = asChild ? Slot : "button";
 
+  const Component = Comp as React.ElementType;
   return (
-    <Comp
+    <Component
       data-slot="sidebar-group-action"
       data-sidebar="group-action"
       className={cn(
@@ -510,9 +511,10 @@ function SidebarMenuButton({
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : "button";
   const { isMobile, state } = useSidebar();
+  const Component = Comp as React.ElementType;
 
   const button = (
-    <Comp
+    <Component
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
       data-size={size}
@@ -555,9 +557,9 @@ function SidebarMenuAction({
   showOnHover?: boolean;
 }) {
   const Comp = asChild ? Slot : "button";
-
+  const Component = Comp as React.ElementType;
   return (
-    <Comp
+    <Component
       data-slot="sidebar-menu-action"
       data-sidebar="menu-action"
       className={cn(
@@ -678,9 +680,9 @@ function SidebarMenuSubButton({
   isActive?: boolean;
 }) {
   const Comp = asChild ? Slot : "a";
-
+  const Component = Comp as React.ElementType;
   return (
-    <Comp
+    <Component
       data-slot="sidebar-menu-sub-button"
       data-sidebar="menu-sub-button"
       data-size={size}

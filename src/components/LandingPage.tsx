@@ -18,7 +18,7 @@ import {
   Handshake
 } from 'lucide-react';
 
-type Page = 'landing' | 'auth' | 'dashboard' | 'resources';
+type Page = 'landing' | 'auth' | 'dashboard' | 'resources' | 'contact';
 
 interface LandingPageProps {
   onNavigate: (page: Page) => void;
@@ -86,10 +86,47 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <BookOpen className="h-8 w-8 text-primary" />
-              <span className="text-xl font-semibold text-primary">EmpowerEd Hub</span>
+              <div className="h-9 w-9 flex items-center justify-center overflow-hidden">
+                <img
+                  src="src/styles/newsmplogo.svg"
+                  alt="EmpowerEd Hub Logo"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    lineHeight: "1", // tighten vertical spacing
+                    marginTop: "1.7rem", // pushes the whole logo down
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: '"Audiowide", cursive',
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Empower
+                    <span style={{ marginLeft: "0.25rem" }}>ED</span>
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: '"Kaushan Script", cursive',
+                      fontSize: "2rem",
+                      color: "#facc15",
+                      marginLeft: "4.8rem", // shifts “Hub” so it lines under “ED”
+                    }}
+                  >
+                    Hub
+                  </span>
+                </div>
+              </div>
             </div>
-            <Button onClick={() => onNavigate('auth')}>Get Started</Button>
+            <Button onClick={() => onNavigate("auth")}>Get Started</Button>
           </div>
         </div>
       </header>
@@ -100,24 +137,30 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-6">
-                Empowering Youth Through 
+                Empowering Youth Through
                 <span className="text-primary"> Digital Learning</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                EmpowerED Hub—a safe and accessible space dedicated to providing digital and vocational skills 
-                to out-of-school and disadvantaged youth between the ages of 10 and 15. We equip them with the 
-                skills they need to secure future employment, start their own businesses, and achieve personal growth.
+                EmpowerED Hub—a safe and accessible space dedicated to providing
+                digital and vocational skills to out-of-school and disadvantaged
+                youth between the ages of 10 and 15. We equip them with the
+                skills they need to secure future employment, start their own
+                businesses, and achieve personal growth.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="w-full sm:w-auto"
-                  onClick={() => onNavigate('auth')}
+                  onClick={() => onNavigate("auth")}
                 >
                   Start Learning Today
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
                   Learn More
                 </Button>
               </div>
@@ -138,7 +181,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
             <div className="relative">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1623863568368-69e4cbe6cc0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIweW91dGglMjBzdHVkZW50cyUyMGxlYXJuaW5nJTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NTY3NDE5NzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                src="/src/styles/multi-ethnic-students-classroom-smiling-learning-together-generated-by-ai_188544-29054.jpg"
                 alt="Diverse youth learning technology"
                 className="rounded-lg shadow-2xl w-full h-[400px] object-cover"
               />
@@ -155,15 +198,19 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               About Us 💻🎓
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              At the heart of our mission lies a commitment to empowering vulnerable youth. We are Group 5, SMP 96 of Lagos Business School, 
-              and we're launching the EmpowerED Hub—a safe and accessible space dedicated to providing digital and vocational skills to 
-              out-of-school and disadvantaged youth between the ages of 10 and 15.
+              At the heart of our mission lies a commitment to empowering
+              vulnerable youth. We are Group 5, SMP 96 of Lagos Business School,
+              and we're launching the EmpowerED Hub—a safe and accessible space
+              dedicated to providing digital and vocational skills to
+              out-of-school and disadvantaged youth between the ages of 10 and
+              15.
             </p>
           </div>
-          
+
           <div className="mb-16">
             <h3 className="text-2xl font-bold text-center mb-8">
-              We're tackling some of the most pressing challenges in our communities:
+              We're tackling some of the most pressing challenges in our
+              communities:
             </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {challenges.map((challenge, index) => (
@@ -192,8 +239,10 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               Our Programs 🚀💡
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              The Digital Learning Hub will offer free training delivered by experienced facilitators, using modern technology 
-              and learning tools. Our programs focus on practical, hands-on skills to prepare participants for success:
+              The Digital Learning Hub will offer free training delivered by
+              experienced facilitators, using modern technology and learning
+              tools. Our programs focus on practical, hands-on skills to prepare
+              participants for success:
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -222,13 +271,16 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               Support Our Cause ❤🤝
             </h2>
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-              We're open to partnership to launch and operate our Digital Learning Hub.
+              We're open to partnership to launch and operate our Digital
+              Learning Hub.
             </p>
           </div>
-          
+
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold mb-6">By becoming a sponsor, you will:</h3>
+              <h3 className="text-2xl font-bold mb-6">
+                By becoming a sponsor, you will:
+              </h3>
               <div className="space-y-4">
                 {sponsorshipBenefits.map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3">
@@ -241,7 +293,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               </div>
               <div className="mt-8 p-6 bg-primary/5 rounded-lg border border-primary/20">
                 <p className="text-lg font-medium text-center">
-                  We believe that with the right skills and opportunity, every young person can overcome their circumstances.
+                  We believe that with the right skills and opportunity, every
+                  young person can overcome their circumstances.
                 </p>
               </div>
             </div>
@@ -257,10 +310,10 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="w-full"
-                    onClick={() => onNavigate('contact')}
+                    onClick={() => onNavigate("contact")}
                   >
                     <Building className="mr-2 h-4 w-4" />
                     Contact Us for Partnership
@@ -279,14 +332,15 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             Ready to Start Your Learning Journey?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join us in empowering vulnerable youth through digital and vocational skills training. 
-            Together, we can create a more equitable and productive society.
+            Join us in empowering vulnerable youth through digital and
+            vocational skills training. Together, we can create a more equitable
+            and productive society.
           </p>
-          <Button 
-            size="lg" 
-            variant="secondary" 
+          <Button
+            size="lg"
+            variant="secondary"
             className="text-primary bg-primary-foreground hover:bg-primary-foreground/90"
-            onClick={() => onNavigate('auth')}
+            onClick={() => onNavigate("auth")}
           >
             Create Your Account
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -299,11 +353,20 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <BookOpen className="h-6 w-6 text-primary" />
-              <span className="text-lg font-semibold text-primary">EmpowerEd Hub</span>
+              <div className="h-9 w-9 flex items-center justify-center overflow-hidden">
+                <img
+                  src="src/styles/newsmplogo.svg"
+                  alt="EmpowerEd Hub Logo"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-lg font-semibold text-primary">
+                EmpowerEd Hub
+              </span>
             </div>
             <p className="text-muted-foreground text-center md:text-right">
-              © 2025 EmpowerEd Hub - Group 5, SMP 96 Lagos Business School. Empowering youth through digital learning.
+              © 2025 EmpowerEd Hub - Group 5, SMP 96 Lagos Business School.
+              Empowering youth through digital learning.
             </p>
           </div>
         </div>

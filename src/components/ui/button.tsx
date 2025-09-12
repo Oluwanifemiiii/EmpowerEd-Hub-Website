@@ -46,8 +46,10 @@ function Button({
   }) {
   const Comp = asChild ? Slot : "button";
 
+  const Component = Comp as React.ElementType;
+
   return (
-    <Comp
+    <Component
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}

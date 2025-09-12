@@ -2,9 +2,11 @@
   import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
+  import svgr from "vite-plugin-svgr";
+  import tailwindcss from '@tailwindcss/vite'
 
   export default defineConfig({
-    plugins: [react()],
+    plugins: [react(), svgr(), tailwindcss()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -16,7 +18,6 @@
         'react-day-picker@8.10.1': 'react-day-picker',
         'next-themes@0.4.6': 'next-themes',
         'lucide-react@0.487.0': 'lucide-react',
-        'jsr:@supabase': 'jsr:',
         'input-otp@1.4.2': 'input-otp',
         'embla-carousel-react@8.6.0': 'embla-carousel-react',
         'cmdk@1.1.1': 'cmdk',
@@ -51,7 +52,11 @@
       outDir: 'build',
     },
     server: {
+      allowedHosts: [
+        '25e994d5f011.ngrok-free.app'
+      ],
       port: 3000,
       open: true,
+      
     },
   });
